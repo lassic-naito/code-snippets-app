@@ -52,7 +52,7 @@ class PostsController extends Controller
     public function create()
     {
         $post = new Post;
-        $categories = Category::orderBy('id','asc')->pluck('category_name');
+        $categories = Category::orderBy('id','asc')->pluck('name', 'id');
 
         return view('posts.create', [
             'post' => $post,

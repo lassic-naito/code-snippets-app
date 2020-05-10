@@ -12,8 +12,8 @@
                     {!! Form::label('title', 'タイトル:') !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}
                     {!! Form::label('category_id', 'カテゴリ:') !!}
-                    {!! Form::select('category_id', $categories, null, ['class' => 'form', 'id' => 'id']) !!}
-                    {!! Form::label('content', 'メッセージ:') !!}
+                    {!! Form::select('category_id', $categories, ['class' => 'form', 'id' => 'category_id']) !!}
+                    {!! Form::label('content', '内容:') !!}
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                 </div>
         

@@ -11,12 +11,10 @@ class PostsSeeder extends Seeder
      */
     public function run()
     {
-         $posts = [
-            ['user_id'=>1, 'parent_category_id'=>0, 'category_name' => 'HTML'],
-            ['id'=>2, 'parent_category_id'=>0, 'category_name' => 'CSS'],
-            ['id'=>3, 'parent_category_id'=>0, 'category_name' => 'PHP'],
-            ['id'=>4, 'parent_category_id'=>3, 'category_name' => 'Laravel'],
-            ['id'=>5, 'parent_category_id'=>0, 'category_name' => 'Javascript'],
+        $posts = [
+            ['user_id'=>1, 'category_id'=>1, 'title'=>'test title', 'content'=>'test text'],
+            ['user_id'=>1, 'category_id'=>2, 'title'=>'test title', 'content'=>'test text'],
+            ['user_id'=>2, 'category_id'=>3, 'title'=>'test title', 'content'=>'test text'],
         ];
         
         DB::table('posts')->insert($posts);
