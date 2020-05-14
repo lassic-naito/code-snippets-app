@@ -9,14 +9,35 @@ use App\Category;
 
 class PostsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $keyword = $request->input('keyword');
+        $key_category = $request->input('key_category');
+        
+        $query = Post::query();
+
+        $request->session()->put('session_key', $key_category);
+
+        if(!empty($keyword))
+        {
+            $query->where('title','like',$keyword)
+                ->orWhere('content','like',$keyword)
+                ->where('category_id', 'session_key');
+        }
+        
+        if(!empty($key_category))
+        {
+            $query->where('category_id', $key_category);
+            $request->session()->forget('session_key');
+        }
+        
+        $posts = $query->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::orderBy('id','asc')->get();
-            
+        
         $data = [
             'posts' => $posts,
             'categories' => $categories,
+            'keyword' => $keyword,
         ];
         
         return view('welcome', $data);
@@ -36,11 +57,10 @@ class PostsController extends Controller
         $post->user_id = \Auth::id();
         $post->save();
 
-
-        return back();
+        return redirect('/');
     }
     
-    public function show()
+    public function show($id)
     {
         $post = Post::find($id);
 
@@ -62,7 +82,7 @@ class PostsController extends Controller
     
     public function destroy($id)
     {
-        $post = \App\Post::find($id);
+        $post = Post::find($id);
 
         if (\Auth::id() === $post->user_id) {
             $post->delete();

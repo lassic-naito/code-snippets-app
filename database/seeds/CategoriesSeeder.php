@@ -17,6 +17,12 @@ class CategoriesSeeder extends Seeder
             ['parent_category_id'=>0, 'name' => 'PHP'],
             ['parent_category_id'=>3, 'name' => 'Laravel'],
             ['parent_category_id'=>0, 'name' => 'Javascript'],
+            ['parent_category_id'=>0, 'name' => 'JAVA'],
+            ['parent_category_id'=>6, 'name' => 'Spring'],
+            ['parent_category_id'=>0, 'name' => 'C'],
+            ['parent_category_id'=>0, 'name' => 'C#'],
+            ['parent_category_id'=>0, 'name' => 'C++'],
+            ['parent_category_id'=>0, 'name' => 'Ruby'],
         ];
         
         DB::table('categories')->truncate();

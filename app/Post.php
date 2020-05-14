@@ -20,6 +20,15 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
     
+    public function scopeCategory($query, ?string $category)
+    {
+        if(!is_null($category))
+        {
+            return $query->where('category', $category);    
+        }
+        return $query;
+    }
+    
     public function parse()
     {
         $parser = new Markdown();

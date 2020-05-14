@@ -8,7 +8,7 @@
         <div class="col-6">
             {!! Form::model($post, ['route' => 'posts.store']) !!}
         
-                <div class="form-group">
+                <div class="form-groupm mb-3">
                     {!! Form::label('title', 'タイトル:') !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}
                     {!! Form::label('category_id', 'カテゴリ:') !!}
@@ -21,5 +21,8 @@
         
             {!! Form::close() !!}
         </div>
+        <div class ="col-6">
+            
+        </div>    
     </div>
 @endsection

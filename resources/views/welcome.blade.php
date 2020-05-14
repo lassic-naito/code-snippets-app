@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('posts.index', ['posts' => $posts])
     @if (!Auth::check())
         <div class="center jumbotron">
             <div class="text-center">
@@ -10,4 +9,5 @@
             </div>
         </div>
     @endif
+    @include('posts.index', ['posts' => $posts])
 @endsection
