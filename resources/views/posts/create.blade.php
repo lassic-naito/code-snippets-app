@@ -4,10 +4,12 @@
 
     <h1>新規投稿</h1>
 
+    <div class="container mt-4">
+        <div class="border p-4">
+
     <div class="row">
         <div class="col-6">
             {!! Form::model($post, ['route' => 'posts.store']) !!}
-        
                 <div class="form-groupm mb-3">
                     {!! Form::label('title', 'タイトル:') !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -24,5 +26,8 @@
         <div class ="col-6">
             
         </div>    
+    </div>
+    
+    </div>
     </div>
 @endsection

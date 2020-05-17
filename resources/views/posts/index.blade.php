@@ -2,13 +2,17 @@
 
 @section('content')
     
+    <div class="container mt-4">
+    
     {!! Form::open(['route' => 'posts.index', 'method' => 'get']) !!}
         <div class="form-group">
             {!! Form::label('keyword', '検索') !!}
             {!! Form::text('keyword' ,'', ['class' => 'form-control', 'placeholder' => '指定なし'] ) !!}
+            <button type="submit" class="btn btn-primary">
+		        <i class="fas fa-search"></i> 
+		    </button>
         </div>
-    {!! Form::submit('検索', ['class' => 'btn btn-primary btn-block']) !!}
-    {!! Form::close() !!}
+	{!! Form::close() !!}
     
     <div class="row">
         <div clas="col-sm-2">
@@ -16,7 +20,11 @@
         </div>
         <div class="col-sm-10">
         <h2>
-            投稿一覧
+            @if($category_name)
+                {{ $category_name }}
+            @else
+                投稿一覧
+            @endif
         </h2>
             
             @if (count($posts) > 0)
@@ -31,11 +39,17 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text">@markdown($post->content)</p>
                             {!! link_to_route('posts.show','詳細',  ['id' => $post->id]) !!}
+                        </div>
+                        <div class="card-footer">
+                            <span class"mr-2">
+                                <i class="far fa-clock"></i>：{{ $post->created_at->format('Y.m.d H:i') }}
+                            </span>
                         </div>
                     </div>
                 @endforeach
+            @else
+                <h3 class="mt-5">該当の投稿はありません。</h3>
             @endif
         </div>
     </div>

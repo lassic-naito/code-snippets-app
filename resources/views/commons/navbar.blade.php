@@ -1,5 +1,5 @@
 <header class="mb-4">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
+    <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #008080;"> 
         <a class="navbar-brand" href="/">CodeShare</a>
          
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
@@ -8,7 +8,7 @@
         
         <div class="collapse navbar-collapse" id="nav-bar">
             <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav nav-pills nav-justified">
                 @if (Auth::check())
                     <li class="nav-item">{!! link_to_route('posts.create', '新規投稿') !!}</li>
                     <li class="nav-item dropdown">
