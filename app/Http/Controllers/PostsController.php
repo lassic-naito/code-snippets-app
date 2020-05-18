@@ -66,11 +66,11 @@ class PostsController extends Controller
     
     public function show($id)
     {
-        // $user = \Auth::user();
+        $user = \Auth::user();
         $post = Post::find($id);
 
         return view('posts.show', [
-            // 'user' => $user,
+            'user' => $user,
             'post' => $post,
         ]);
     }

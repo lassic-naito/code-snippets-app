@@ -24,7 +24,7 @@
     
             <section>
                 <h2 class="h5 mb-4">
-                    コメント欄
+                    コメント
                 </h2>
             
                 @forelse($post->review as $review)
