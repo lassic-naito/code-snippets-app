@@ -6,25 +6,29 @@ use Illuminate\Http\Request;
 
 use App\Post;
 use App\Category;
+use App\Tag;
+use App\PostTag;
 
 class PostsController extends Controller
 {
     public function index(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $key_category = $request->input('key_category');
-        
         $query = Post::query();
-        $category = new Category();
-
-        // $request->session()->put('session_key', $key_category);
-
+        
+        // キーワード検索
+        $keyword = $request->input('keyword');
+        
         if(!empty($keyword))
         {
             $query->where('title','like',$keyword)
                 ->orWhere('content','like',$keyword);
-                // ->where('category_id', 'session_key');
+               // ->where('category_id', 'session_key');
         }
+        
+        
+        // カテゴリ絞り込み
+        $key_category = $request->input('key_category');
+        $category = new Category();
         
         if(!empty($key_category))
         {
@@ -32,16 +36,26 @@ class PostsController extends Controller
             // $request->session()->forget('session_key');
         }
         
-        $posts = $query->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::orderBy('id','asc')->get();
-        
         $category_name = $category->where('id',$key_category)->value('name');
+        
+        // タグ検索
+        $tags = \Request::get('tag');
+     
+        if ($tags) {
+            $query->whereIn('id', $this->getPostIdByTags($tags));
+        }
+        
+        $tag_list = Tag::get()->pluck("name", "id");
+
+        $posts = $query->orderBy('created_at', 'desc')->paginate(10);
         
         $data = [
             'posts' => $posts,
             'categories' => $categories,
             'keyword' => $keyword,
             'category_name' => $category_name,
+            'tag_list' => $tag_list,
         ];
         
         return view('welcome', $data);
@@ -60,6 +74,7 @@ class PostsController extends Controller
         $post->category_id = $request->category_id;
         $post->user_id = \Auth::id();
         $post->save();
+        $post->tag()->attach($request->input('tags'));
 
         return redirect('/');
     }
@@ -79,10 +94,14 @@ class PostsController extends Controller
     {
         $post = new Post;
         $categories = Category::orderBy('id','asc')->pluck('name', 'id');
+        $tag_list = Tag::pluck("name", "id");
+        
+        // $tagList = Tag::get()->pluck("name","id");
 
         return view('posts.create', [
             'post' => $post,
             'categories' => $categories,
+            'tag_list' => $tag_list,
         ]);
     }
     
@@ -95,5 +114,23 @@ class PostsController extends Controller
         }
 
         return redirect('/');
+    }
+
+    // public function getPostIdByKeywords($req)
+    // {
+            
+    // }
+    
+    
+    public function getPostIdByTags($tags)
+    {
+        $query = PostTag::query();
+        if ($query !== null){
+            foreach($tags as $id){
+                $query->Where('tag_id', $id);
+            }
+        }
+        
+        return $query->get()->pluck("post_id");
     }
 }

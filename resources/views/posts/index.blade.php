@@ -12,6 +12,12 @@
 		        <i class="fas fa-search"></i> 
 		    </button>
         </div>
+        @foreach ($tag_list as $tags => $tag)
+        <label class="checkbox">
+            <input type="checkbox" name="tags[]" value="{{$tags}}">
+            {{ $tag }}
+        </label>
+        @endforeach
 	{!! Form::close() !!}
     
     <div class="row">

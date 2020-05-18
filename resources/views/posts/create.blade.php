@@ -12,9 +12,17 @@
             {!! Form::model($post, ['route' => 'posts.store']) !!}
                 <div class="form-groupm mb-3">
                     {!! Form::label('title', 'タイトル:') !!}
-                    {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('title', null, ['class' => 'form-control']) !!} <br>
                     {!! Form::label('category_id', 'カテゴリ:') !!}
-                    {!! Form::select('category_id', $categories, ['class' => 'form', 'id' => 'category_id']) !!}
+                    {!! Form::select('category_id', $categories, ['class' => 'form', 'id' => 'category_id']) !!} <br>
+                    
+                    @foreach ($tag_list as $tags => $tag)
+                    <label class="checkbox">
+                        <input type="checkbox" name="tags[]" value="{{$tags}}">
+                        {{ $tag }}
+                    </label>
+                    @endforeach
+                    <br>
                     {!! Form::label('content', '内容:') !!}
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                 </div>

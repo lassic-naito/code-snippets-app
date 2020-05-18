@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "andreasindal/laravel-markdown": "^3.1",
         "cebe/markdown": "^1.2",
+        "doctrine/dbal": "^2.10",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
