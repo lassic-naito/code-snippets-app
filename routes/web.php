@@ -29,8 +29,9 @@ Route::resource('posts', 'PostsController');
 // ユーザ機能
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('reviews', 'ReviewsController', ['only' => ['store']]);
+    
+    Route::group(['prefix' => 'posts/{id}'], function () {
+        Route::post('put', 'TagCheckController@store')->name('tag.put');
+        Route::delete('out', 'TagCheckController@destroy')->name('tag.out');
+    });
 });
-
-
-
-

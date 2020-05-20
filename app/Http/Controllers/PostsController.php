@@ -20,11 +20,10 @@ class PostsController extends Controller
         
         if(!empty($keyword))
         {
-            $query->where('title','like',$keyword)
-                ->orWhere('content','like',$keyword);
+            $query->where('title','like', "%$keyword%")
+                ->orWhere('content','like', "%$keyword%");
                // ->where('category_id', 'session_key');
         }
-        
         
         // カテゴリ絞り込み
         $key_category = $request->input('key_category');
@@ -40,10 +39,10 @@ class PostsController extends Controller
         $category_name = $category->where('id',$key_category)->value('name');
         
         // タグ検索
-        $tags = \Request::get('tag');
-     
-        if ($tags) {
-            $query->whereIn('id', $this->getPostIdByTags($tags));
+        $tag = $request->input('tag');
+        
+        if (!empty($tag)) {
+            $query->whereIn('id', $this->getPostIdByTags($tag));
         }
         
         $tag_list = Tag::get()->pluck("name", "id");
@@ -61,6 +60,22 @@ class PostsController extends Controller
         return view('welcome', $data);
     }
     
+    public function create()
+    {
+        $post = new Post;
+        $categories = Category::orderBy('id','asc')->pluck('name', 'id');
+        $tag_list = Tag::pluck("name", "id");
+        
+        // $tagList = Tag::get()->pluck("name","id");
+
+        return view('posts.create', [
+            'post' => $post,
+            'categories' => $categories,
+            'tag_list' => $tag_list,
+        ]);
+    }
+    
+    
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -74,6 +89,7 @@ class PostsController extends Controller
         $post->category_id = $request->category_id;
         $post->user_id = \Auth::id();
         $post->save();
+        
         $post->tag()->attach($request->input('tags'));
 
         return redirect('/');
@@ -90,19 +106,45 @@ class PostsController extends Controller
         ]);
     }
     
-    public function create()
+    public function edit($id)
     {
-        $post = new Post;
+        $data = [];
+        
+        $post = Post::find($id);
         $categories = Category::orderBy('id','asc')->pluck('name', 'id');
         $tag_list = Tag::pluck("name", "id");
         
-        // $tagList = Tag::get()->pluck("name","id");
-
-        return view('posts.create', [
+        if(\Auth::id() !== $post->user_id){
+            return redirect('/');
+        }
+        
+        $data = [
             'post' => $post,
             'categories' => $categories,
             'tag_list' => $tag_list,
+        ];
+
+        return view('posts.edit', $data);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title' => 'required|max:50',
+            'content' => 'required|max:2000',
         ]);
+
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->category_id = $request->category_id;
+        $post->user_id = \Auth::id();
+        $post->save();
+        
+        $post->tag()->detach();
+        $post->tag()->attach($request->input('tags'));
+
+        return redirect()->route('posts.show', ['post' => $post]);
     }
     
     public function destroy($id)
@@ -122,15 +164,11 @@ class PostsController extends Controller
     // }
     
     
-    public function getPostIdByTags($tags)
+    public function getPostIdByTag($tag)
     {
         $query = PostTag::query();
-        if ($query !== null){
-            foreach($tags as $id){
-                $query->Where('tag_id', $id);
-            }
-        }
-        
+        $query->where('tag_id', $tag);
+
         return $query->get()->pluck("post_id");
     }
 }

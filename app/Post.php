@@ -31,39 +31,39 @@ class Post extends Model
         return $this->belongsToMany(Tag::class, 'post_tag');  
     }
     
-    // public function post_tag()
-    // {
-    //     return $this->belongsToMany(Post::class, 'post_tag', 'post_id', 'tag_id');
-    // }
+    public function post_tag()
+    {
+        return $this->belongsToMany(Post::class, 'post_tag', 'post_id', 'tag_id');
+    }
     
-    // public function put_tag($postId)
-    // {
-    //     $exist = $this->is_tag_putting($postId);
+    public function put_tag($postId)
+    {
+        $exist = $this->is_tag_putting($postId);
         
-    //     if($exist){
-    //         return false;    
-    //     }else{
-    //         $this->post_tag()->attach($postId);
-    //         return true;
-    //     }
-    // }
+        if($exist){
+            return false;    
+        }else{
+            $this->post_tag()->attach($postId);
+            return true;
+        }
+    }
     
-    // public function out_tag($postId)
-    // {
-    //     $exist = $this->is_tag_putting($postId);
+    public function out_tag($postId)
+    {
+        $exist = $this->is_tag_putting($postId);
         
-    //     if($exist){
-    //         $this->post_tag()->detach($postId);
-    //         return true;    
-    //     }else{
-    //         return false;
-    //     }
-    // }
+        if($exist){
+            $this->post_tag()->detach($postId);
+            return true;    
+        }else{
+            return false;
+        }
+    }
     
-    // public function is_tag_putting($postId)
-    // {
-    //     return $this->post_tag()->where('post_id', $postId)->exists();
-    // }
+    public function is_tag_putting($postId)
+    {
+        return $this->post_tag()->where('post_id', $postId)->exists();
+    }
     
     
     public function scopeCategory($query, ?string $category)

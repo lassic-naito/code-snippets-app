@@ -5,27 +5,32 @@
     <div class="container mt-4">
     
     {!! Form::open(['route' => 'posts.index', 'method' => 'get']) !!}
-        <div class="form-group">
-            {!! Form::label('keyword', '検索') !!}
+        <div class="d-flex form-group">
             {!! Form::text('keyword' ,'', ['class' => 'form-control', 'placeholder' => '指定なし'] ) !!}
             <button type="submit" class="btn btn-primary">
 		        <i class="fas fa-search"></i> 
 		    </button>
         </div>
-        @foreach ($tag_list as $tags => $tag)
-        <label class="checkbox">
-            <input type="checkbox" name="tags[]" value="{{$tags}}">
-            {{ $tag }}
-        </label>
+	
+	{!! Form::open(['route' => 'posts.index', 'method' => 'get']) !!}
+	    @foreach ($tag_list as $tags => $tag)
+            <button type="submit" value="{{$tag}}" class="btn d-inline-flex bg-info text-white rounded-pill p-2">
+                <font size="2">
+                    <i class="fas fa-tag"></i>  {{ $tag }}
+                </font>
+            </button>
         @endforeach
-	{!! Form::close() !!}
+    {!! Form::close() !!}
+	
+    
+    <br>
     
     <div class="row">
         <div clas="col-sm-2">
             @include('commons.category_list')
         </div>
         <div class="col-sm-10">
-        <h2>
+        <h2 class="border-bottom">
             @if($category_name)
                 {{ $category_name }}
             @else
@@ -45,6 +50,15 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
+                            <p>
+                            @foreach($post->tag as $tag)
+                                <button class="btn d-inline-flex bg-info text-white rounded-pill p-2">
+                                    <font size="2">
+                                        <i class="fas fa-tag"></i>  {{ $tag->name }}
+                                    </font>
+                                </button>
+                            @endforeach
+                            </p>
                             {!! link_to_route('posts.show','詳細',  ['id' => $post->id]) !!}
                         </div>
                         <div class="card-footer">
@@ -56,7 +70,10 @@
                 @endforeach
             @else
                 <h3 class="mt-5">該当の投稿はありません。</h3>
-            @endif
+            @endif 
+            {{ $posts->links('pagination::bootstrap-4') }}
         </div>
+       
     </div>
+    
 @endsection
