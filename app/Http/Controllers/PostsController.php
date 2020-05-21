@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Tag;
-use App\PostTag;
 
 class PostsController extends Controller
 {
@@ -42,7 +41,7 @@ class PostsController extends Controller
         $tag = $request->input('tag');
         
         if (!empty($tag)) {
-            $query->whereIn('id', $this->getPostIdByTags($tag));
+            $query->whereIn('id', $this->getPostIdByTag($tag));
         }
         
         $tag_list = Tag::get()->pluck("name", "id");
@@ -90,7 +89,7 @@ class PostsController extends Controller
         $post->user_id = \Auth::id();
         $post->save();
         
-        $post->tag()->attach($request->input('tags'));
+        $post->tags()->attach($request->input('tags'));
 
         return redirect('/');
     }
@@ -141,8 +140,8 @@ class PostsController extends Controller
         $post->user_id = \Auth::id();
         $post->save();
         
-        $post->tag()->detach();
-        $post->tag()->attach($request->input('tags'));
+        $post->tags()->detach();
+        $post->tags()->attach($request->input('tags'));
 
         return redirect()->route('posts.show', ['post' => $post]);
     }
@@ -158,17 +157,11 @@ class PostsController extends Controller
         return redirect('/');
     }
 
-    // public function getPostIdByKeywords($req)
-    // {
-            
-    // }
-    
-    
-    public function getPostIdByTag($tag)
+    public function getPostIdByTag($tagId)
     {
-        $query = PostTag::query();
-        $query->where('tag_id', $tag);
+        $tag = Tag::find($tagId);
+        // $tag->post_tag()->where('tag_id', $tagId);
 
-        return $query->get()->pluck("post_id");
+        return $tag->post_tag()->pluck("post_id");
     }
 }

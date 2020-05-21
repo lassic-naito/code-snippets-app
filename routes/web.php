@@ -26,9 +26,19 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 Route::resource('posts', 'PostsController');
 
+Route::group(['prefix' => 'category/{id}'], function () {
+    Route::get('', 'CategoriesController@index')->name('categories.index');
+});
+
+
 // ユーザ機能
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('reviews', 'ReviewsController', ['only' => ['store']]);
+    Route::resource('users', 'UsersController', ['only' => ['index']]);
+    
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('delete/{id}', 'UsersController@deleteData');
+    });
     
     Route::group(['prefix' => 'posts/{id}'], function () {
         Route::post('put', 'TagCheckController@store')->name('tag.put');

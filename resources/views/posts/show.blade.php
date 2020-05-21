@@ -9,7 +9,7 @@
             {!! Form::model($post, ['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
                 <button type="submit" class="btn btn-danger btn-dell">
 	               <i class="fas fa-trash-alt"></i>:削除
-	           </button>
+	            </button>
             {!! Form::close() !!}
         </div>
     @endif
@@ -23,7 +23,7 @@
                 <h1>{{ $post->title }}</h1>
                 <p class="d-inline-flex text-black pr-3 pl-3 catebadge rounded">{{ $post->category->name}}</p>  
                 <br>
-                @foreach($post->tag as $tag)
+                @foreach($post->tags as $tag)
                     <p class="d-inline-flex bg-info text-white rounded-pill p-2">
                         <font size="2">
                             <i class="fas fa-tag"></i>  {{ $tag->name }}

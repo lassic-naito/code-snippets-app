@@ -26,7 +26,7 @@ class Post extends Model
         return $this->hasMany(Review::class);
     }
     
-    public function tag()
+    public function tags()
     {
         return $this->belongsToMany(Tag::class, 'post_tag');  
     }

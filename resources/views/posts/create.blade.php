@@ -14,7 +14,7 @@
                     {!! Form::label('title', 'タイトル:') !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!} <br>
                     {!! Form::label('category_id', 'カテゴリ:') !!}
-                    {!! Form::select('category_id', $categories, ['class' => 'form', 'id' => 'category_id']) !!} <br>
+                    {!! Form::select('category_id', $categories, ['class' => 'form'], ['placeholder' => '選択してください']) !!} <br>
                     
                     @foreach ($tag_list as $tags => $tag)
                     <label class="checkbox">
