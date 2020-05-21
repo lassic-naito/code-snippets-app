@@ -91,7 +91,7 @@ class PostsController extends Controller
         
         $post->tags()->attach($request->input('tags'));
 
-        return redirect('/');
+        return redirect('/')->with('flash_message', '投稿が完了しました');;
     }
     
     public function show($id)

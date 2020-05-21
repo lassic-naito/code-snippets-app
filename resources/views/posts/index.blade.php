@@ -10,8 +10,11 @@
         <div clas="col-sm-2">
             @include('commons.category_list')
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             @include('commons.posts_list')
+        </div>
+        <div class="col-sm-2">
+            
         </div>
     </div>
 
