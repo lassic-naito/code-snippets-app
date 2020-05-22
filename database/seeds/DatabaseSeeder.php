@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         
+        DB::statement('SET CONSTRAINTS ALL DEFERRED;');
+        
         // $this->call(UsersTableSeeder::class);
         $this->call('CategoriesSeeder');
         // $this->call('ReviewsSeeder');
@@ -21,5 +23,7 @@ class DatabaseSeeder extends Seeder
         // $this->call('UserSeeder');
         
         // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        
+        DB::statement('SET CONSTRAINTS ALL IMMEDIATE;');
     }
 }
