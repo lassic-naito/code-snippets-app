@@ -20,13 +20,15 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $post->title }}</h5>
                 <p>
+                    {!! Form::open(['route' => 'posts.index', 'method' => 'get']) !!}
                     @foreach($post->tags as $tag)
-                        <button class="btn d-inline-flex bg-info text-white rounded-pill p-2">                                
+                        <button type="submit" name="tag" value="{{$tag->id}}" class="btn d-inline-flex bg-info text-white rounded-pill p-2">                                
                             <font size="2">
                                 <i class="fas fa-tag"></i>  {{ $tag->name }}
                             </font>
                         </button>
                     @endforeach
+                    {!! Form::close() !!}
                 </p>
                 {!! link_to_route('posts.show','詳細',  ['id' => $post->id]) !!}
             </div>

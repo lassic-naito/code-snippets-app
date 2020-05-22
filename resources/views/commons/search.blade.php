@@ -7,7 +7,7 @@
         </div>  
 	   
 	    @foreach ($tag_list as $tags => $tag)
-            <button type="submit" name='tag' value="{{$tags}}" class="btn d-inline-flex bg-info text-white rounded-pill p-2">
+            <button type="submit" name="tag" value="{{$tags}}" class="btn d-inline-flex bg-info text-white rounded-pill p-2">
                 <font size="2">
                     <i class="fas fa-tag"></i>  {{ $tag }}
                 </font>

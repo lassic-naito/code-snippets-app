@@ -143,7 +143,7 @@ class PostsController extends Controller
         $post->tags()->detach();
         $post->tags()->attach($request->input('tags'));
 
-        return redirect()->route('posts.show', ['post' => $post]);
+        return redirect()->route('posts.show', ['post' => $post])->with('flash_message', '編集が完了しました');
     }
     
     public function destroy($id)
@@ -154,7 +154,7 @@ class PostsController extends Controller
             $post->delete();
         }
 
-        return redirect('/');
+        return redirect('/')->with('flash_message', '投稿を削除しました');
     }
 
     public function getPostIdByTag($tagId)
