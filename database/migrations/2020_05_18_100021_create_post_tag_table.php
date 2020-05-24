@@ -20,8 +20,8 @@ class CreatePostTagTable extends Migration
             $table->timestamps();
             
             // 外部キー制約
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            // $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            // $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
 
             // user_idとmicropost_idの組み合わせの重複を許さない
             $table->unique(['post_id', 'tag_id']);
