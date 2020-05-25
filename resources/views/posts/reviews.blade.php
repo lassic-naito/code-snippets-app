@@ -11,37 +11,41 @@
         </p>
     </div> 
     @empty
-    <p>コメントはまだありません。</p>
+    <p>コメントはありません。</p>
 @endforelse
     
 @if (Auth::check())
-    <form class="mb-4" method="POST" action="{{ route('reviews.store') }}">
-        <input type="hidden" name="post_id", value="{{ $post->id }}">
-        <input type="hidden" name="user_id", value="{{ $user->id }}">
+     @if(!$d_user)
+        <form class="mb-4" method="POST" action="{{ route('reviews.store') }}">
+            <input type="hidden" name="post_id", value="{{ $post->id }}">
+            <input type="hidden" name="user_id", value="{{ $user->id }}">
         
-        <div class="form-group">
-            <label for="content">
-                コメント投稿フォーム
-            </label>
-            {{ csrf_field() }}
-            <textarea 
-                id="content"
-                name="content"
-                class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}"
-                rows="4"
-                onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();return false};"
-            >{{ old('content') }}</textarea>
-            @if ($errors->has('content'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('content') }}
-                </div> 
-            @endif
-        </div> 
+            <div class="form-group">
+                <label for="content">
+                    コメント投稿フォーム
+                </label>
+                {{ csrf_field() }}
+                <textarea 
+                    id="content"
+                    name="content"
+                    class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}"
+                    rows="4"
+                    onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();return false};"
+                >{{ old('content') }}</textarea>
+                @if ($errors->has('content'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('content') }}
+                    </div> 
+                @endif
+            </div> 
         
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary">
-                コメントする
-            </button>
-        </div>
-    </form>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                    コメントする
+                </button>
+            </div>
+        </form>
+    @else
+        <font color="red"><i class="fas fa-lock"></i>：投稿者が退会しているためコメントできません。</font>
+    @endif
 @endif 

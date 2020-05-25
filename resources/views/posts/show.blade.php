@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::id() == $post->user_id)
+    @if ( (Auth::id() == $post->user_id) && (!$d_user) )
         <div class="d-flex justify-content-start-around">
             <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-success">
                 <i class="fas fa-edit"></i>:編集
@@ -17,7 +17,12 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-sm-8 showcard">
-                <i class="fas fa-user"></i>:{{ $post->user->name }}<br>
+                @if( !$d_user )
+                    <i class="fas fa-user"></i>:{{ $post->user->name }}<br>
+                @else
+                    <i class="fas fa-user"></i>:退会済みユーザ <br>
+                @endif
+    
                 <i class="far fa-clock"></i>:{{ $post->created_at->format('Y.m.d H:i') }} 投稿
     
                 <h1>{{ $post->title }}</h1>
