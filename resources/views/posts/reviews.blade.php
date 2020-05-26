@@ -3,7 +3,7 @@
 @forelse($post->review as $review)
     <div class="border-top p-4">
         <i class="fas fa-user"></i>:
-        @if (!$d_user)
+        @if (!$d_r_user)
             {{ $review->user->name }} <br>
         @else
             退会済みユーザ <br>
@@ -20,7 +20,7 @@
 @endforelse
     
 @if (Auth::check())
-     @if(!$d_user)
+     @if(!$d_r_user)
         <form class="mb-4" method="POST" action="{{ route('reviews.store') }}">
             <input type="hidden" name="post_id", value="{{ $post->id }}">
             <input type="hidden" name="user_id", value="{{ $user->id }}">

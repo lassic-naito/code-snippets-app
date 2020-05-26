@@ -8,6 +8,7 @@ use App\Post;
 use App\User;
 use App\Category;
 use App\Tag;
+use App\Review;
 
 class PostsController extends Controller
 {
@@ -99,12 +100,16 @@ class PostsController extends Controller
     {
         $user = \Auth::user();
         $post = Post::find($id);
+        $review = Review::find($id);
+        
         $d_user = User::onlyTrashed()->where('id', $post->user_id)->exists();
+        $d_r_user = User::onlyTrashed()->where('id', $review->user_id)->exists();
         
         return view('posts.show', [
             'user' => $user,
             'post' => $post,
             'd_user' => $d_user,
+            'd_r_user' => $d_r_user,
         ]);
     }
     
