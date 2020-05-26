@@ -54,3 +54,4 @@ class CategoriesController extends Controller
         return view('categories.index', $data);
     }
 }
+0

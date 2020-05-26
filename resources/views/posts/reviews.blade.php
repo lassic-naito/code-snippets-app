@@ -2,7 +2,12 @@
             
 @forelse($post->review as $review)
     <div class="border-top p-4">
-        <i class="fas fa-user"></i>:{{ $review->user->name }} <br>
+        <i class="fas fa-user"></i>:
+        @if (!d_user)
+            {{ $review->user->name }} <br>
+        @else
+            退会済みユーザ <br>
+        @endif
         <time class="text-secondary">
             <i class="far fa-clock"></i>:{{ $review->created_at->format('Y.m.d H:i') }}
         </time>
