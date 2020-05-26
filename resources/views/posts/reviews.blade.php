@@ -4,7 +4,7 @@
     <div class="border-top p-4">
         <i class="fas fa-user"></i>:
         @if (!$d_r_user)
-            {{ $review->user->name }} <br>
+             <br>
         @else
             退会済みユーザ <br>
         @endif
