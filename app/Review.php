@@ -8,7 +8,7 @@ use cebe\markdown\GithubMarkdown as Markdown;
 class Review extends Model
 {
     protected $fillable = [
-        'content', 'post_id', 'user_id',
+        'post_id', 'user_id', 'content',
     ];
     
     public function post(){

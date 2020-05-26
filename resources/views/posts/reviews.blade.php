@@ -3,8 +3,8 @@
 @forelse($post->review as $review)
     <div class="border-top p-4">
         <i class="fas fa-user"></i>:
-        @if (!$d_r_user)
-             <br>
+        @if (!App\User::onlyTrashed()->where('id', $review->user_id)->exists())
+            {{ $review->user->name }} <br>
         @else
             退会済みユーザ <br>
         @endif

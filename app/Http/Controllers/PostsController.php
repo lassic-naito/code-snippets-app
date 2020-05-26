@@ -98,18 +98,18 @@ class PostsController extends Controller
     
     public function show($id)
     {
+        // $d_r_user = '';
+        
         $user = \Auth::user();
         $post = Post::find($id);
-        $review = Review::find($id);
+        $review = Review::find($post->id);
         
         $d_user = User::onlyTrashed()->where('id', $post->user_id)->exists();
-        $d_r_user = User::onlyTrashed()->where('id', $review->user_id)->exists();
         
         return view('posts.show', [
             'user' => $user,
             'post' => $post,
             'd_user' => $d_user,
-            'd_r_user' => $d_r_user,
         ]);
     }
     
