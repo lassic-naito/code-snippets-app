@@ -3,7 +3,7 @@
 @forelse($post->review as $review)
     <div class="border-top p-4">
         <i class="fas fa-user"></i>:
-        @if (!d_user)
+        @if (!$d_user)
             {{ $review->user->name }} <br>
         @else
             退会済みユーザ <br>
