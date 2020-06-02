@@ -20,7 +20,7 @@
 @endforelse
     
 @if (Auth::check())
-     @if(!$d_r_user)
+    @if(!$d_user)
         <form class="mb-4" method="POST" action="{{ route('reviews.store') }}">
             <input type="hidden" name="post_id", value="{{ $post->id }}">
             <input type="hidden" name="user_id", value="{{ $user->id }}">

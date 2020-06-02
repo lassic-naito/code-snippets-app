@@ -18,6 +18,7 @@ class PostsController extends Controller
         
         // キーワード検索
         $keyword = $request->input('keyword');
+        $sort_key = $request->input('sort');
         
         if(!empty($keyword))
         {
@@ -47,9 +48,30 @@ class PostsController extends Controller
         }
         
         $tag_list = Tag::get()->pluck("name", "id");
-
-        $posts = $query->orderBy('created_at', 'desc')->paginate(10);
         
+        $sort_data = [];
+
+        switch($sort_key){
+            case 'title_sort_asc':
+                // $sort_data = ['title', 'asc'];
+                $posts = $query->orderBy('title', 'asc')->paginate(10);
+                break;
+            case 'title_sort_desc':
+                // $sort_data = ['title', 'desc'];
+                $posts = $query->orderBy('title', 'desc')->paginate(10);
+                break;
+            case 'created_sort_asc':
+                $posts = $query->orderBy('created_at', 'asc')->paginate(10);
+                // $sort_data = ['created_at', 'asc'];
+                break;
+            default:
+                $posts = $query->orderBy('created_at', 'desc')->paginate(10);
+                // $sort_data = ['created_at', 'asc'];
+                break;
+        }
+        
+        // $posts = $query->orderBy($sort_data)->paginate(10);
+
         $data = [
             'posts' => $posts,
             'categories' => $categories,

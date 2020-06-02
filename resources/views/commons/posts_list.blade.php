@@ -25,6 +25,7 @@
                         <button type="submit" name="tag" value="{{$tag->id}}" class="btn d-inline-flex bg-info text-white rounded-pill p-2">                                
                             <font size="2">
                                 <i class="fas fa-tag"></i>  {{ $tag->name }}
+                                @include('commons.icon')
                             </font>
                         </button>
                     @endforeach
